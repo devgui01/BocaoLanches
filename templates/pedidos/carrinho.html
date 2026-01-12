@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block title %}Carrinho - Bocão Lanches{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Carrinho de Compras</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div id="carrinho-items" class="card">
+            <div class="card-body">
+                <div id="carrinho-vazio" class="text-center py-5" style="display: none;">
+                    <i class="bi bi-cart-x" style="font-size: 4rem; color: #ccc;"></i>
+                    <p class="text-muted mt-3">Seu carrinho está vazio</p>
+                    <a href="{% url 'core:cardapio' %}" class="btn btn-primary">Ver Cardápio</a>
+                </div>
+                <div id="carrinho-lista"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Resumo do Pedido</h5>
+                <hr>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">R$ 0,00</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Taxa de Entrega:</span>
+                    <span id="taxa-entrega">R$ 0,00</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-3">
+                    <strong>Total:</strong>
+                    <strong id="total" class="text-primary">R$ 0,00</strong>
+                </div>
+                <a href="{% url 'pedidos:checkout' %}" class="btn btn-primary w-100" id="btn-checkout" style="display: none;">
+                    <i class="bi bi-credit-card"></i> Finalizar Pedido
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let carrinho = {};
+
+function carregarCarrinho() {
+    fetch('{% url "pedidos:obter_carrinho" %}')
+    .then(response => response.json())
+    .then(data => {
+        carrinho = data.carrinho || {};
+        atualizarCarrinho();
+    });
+}
+
+function atualizarCarrinho() {
+    const carrinhoLista = document.getElementById('carrinho-lista');
+    const carrinhoVazio = document.getElementById('carrinho-vazio');
+    const btnCheckout = document.getElementById('btn-checkout');
+    
+    if (Object.keys(carrinho).length === 0) {
+        carrinhoLista.style.display = 'none';
+        carrinhoVazio.style.display = 'block';
+        btnCheckout.style.display = 'none';
+        document.getElementById('cart-count').textContent = '0';
+        return;
+    }
+    
+    carrinhoLista.style.display = 'block';
+    carrinhoVazio.style.display = 'none';
+    btnCheckout.style.display = 'block';
+    
+    let html = '';
+    let subtotal = 0;
+    let quantidadeTotal = 0;
+    
+    for (const [id, item] of Object.entries(carrinho)) {
+        const itemSubtotal = item.preco * item.quantidade;
+        subtotal += itemSubtotal;
+        quantidadeTotal += item.quantidade;
+        
+        html += `
+            <div class="d-flex align-items-center mb-3 pb-3 border-bottom" id="item-${id}">
+                <div class="flex-shrink-0">
+                    ${item.imagem ? `<img src="${item.imagem}" style="width: 80px; height: 80px; object-fit: cover;" class="rounded">` : ''}
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h6>${item.nome}</h6>
+                    <p class="text-muted mb-0">R$ ${item.preco.toFixed(2)}</p>
+                </div>
+                <div class="ms-3">
+                    <div class="input-group" style="width: 120px;">
+                        <button class="btn btn-outline-secondary" onclick="alterarQuantidade(${id}, -1)">-</button>
+                        <input type="number" class="form-control text-center" value="${item.quantidade}" min="1" readonly>
+                        <button class="btn btn-outline-secondary" onclick="alterarQuantidade(${id}, 1)">+</button>
+                    </div>
+                    <div class="text-end mt-2">
+                        <strong>R$ ${itemSubtotal.toFixed(2)}</strong>
+                    </div>
+                    <button class="btn btn-sm btn-danger mt-2" onclick="removerItem(${id})">
+                        <i class="bi bi-trash"></i> Remover
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
+    carrinhoLista.innerHTML = html;
+    document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
+    document.getElementById('total').textContent = `R$ ${subtotal.toFixed(2)}`;
+    document.getElementById('cart-count').textContent = quantidadeTotal;
+}
+
+function alterarQuantidade(produtoId, delta) {
+    const item = carrinho[produtoId];
+    if (!item) return;
+    
+    const novaQuantidade = item.quantidade + delta;
+    if (novaQuantidade < 1) {
+        removerItem(produtoId);
+        return;
+    }
+    
+    fetch('{% url "pedidos:adicionar_carrinho" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({
+            produto_id: produtoId,
+            quantidade: delta
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            carrinho = data.carrinho;
+            atualizarCarrinho();
+        }
+    });
+}
+
+function removerItem(produtoId) {
+    fetch('{% url "pedidos:remover_carrinho" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({
+            produto_id: produtoId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            carrinho = data.carrinho;
+            atualizarCarrinho();
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', carregarCarrinho);
+</script>
+{% endblock %}

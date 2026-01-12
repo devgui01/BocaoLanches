@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Bocão Lanches{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-5 fw-bold">Dashboard</h1>
+    </div>
+</div>
+
+<!-- Cards de Resumo -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-muted">Vendas Hoje</h5>
+                <h2 style="color: var(--dourado);">R$ {{ vendas_hoje|floatformat:2 }}</h2>
+                <small class="text-muted">{{ qtd_pedidos_hoje }} pedidos</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-muted">Vendas Semana</h5>
+                <h2 style="color: var(--dourado);">R$ {{ vendas_semana|floatformat:2 }}</h2>
+                <small class="text-muted">{{ qtd_pedidos_semana }} pedidos</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-muted">Vendas Mês</h5>
+                <h2 style="color: var(--dourado);">R$ {{ vendas_mes|floatformat:2 }}</h2>
+                <small class="text-muted">{{ qtd_pedidos_mes }} pedidos</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-muted">Lucro Mês</h5>
+                <h2 style="color: {% if lucro_mes >= 0 %}var(--dourado){% else %}var(--vermelho-bocao){% endif %};">
+                    R$ {{ lucro_mes|floatformat:2 }}
+                </h2>
+                <small class="text-muted">Custos: R$ {{ custos_mes|floatformat:2 }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Status dos Pedidos -->
+<div class="row mb-4">
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Pendentes</h5>
+                <h1 style="color: var(--dourado);">{{ pedidos_pendentes }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Preparando</h5>
+                <h1 style="color: var(--dourado);">{{ pedidos_preparando }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Prontos</h5>
+                <h1 style="color: var(--dourado);">{{ pedidos_prontos }}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gráfico de Vendas -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Vendas dos Últimos 7 Dias</h5>
+                <canvas id="vendasChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Produtos Mais Vendidos -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Produtos Mais Vendidos (30 dias)</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for produto in produtos_vendidos %}
+                        <tr>
+                            <td>{{ produto.produto__nome }}</td>
+                            <td>{{ produto.quantidade }}</td>
+                            <td>R$ {{ produto.total_vendas|floatformat:2 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Nenhuma venda registrada</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Formas de Pagamento</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Forma</th>
+                            <th>Quantidade</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for forma in formas_pagamento %}
+                        <tr>
+                            <td>
+                                {% if forma.forma_pagamento == 'pix' %}PIX
+                                {% elif forma.forma_pagamento == 'dinheiro' %}Dinheiro
+                                {% elif forma.forma_pagamento == 'cartao_credito' %}Cartão de Crédito
+                                {% elif forma.forma_pagamento == 'cartao_debito' %}Cartão de Débito
+                                {% elif forma.forma_pagamento == 'mercado_pago' %}Mercado Pago
+                                {% else %}{{ forma.forma_pagamento }}{% endif %}
+                            </td>
+                            <td>{{ forma.quantidade }}</td>
+                            <td>R$ {{ forma.total|floatformat:2 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Nenhum dado disponível</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{ vendas_por_dia|json_script:"vendas-data" }}
+<script>
+const vendasData = JSON.parse(document.getElementById('vendas-data').textContent);
+const ctx = document.getElementById('vendasChart').getContext('2d');
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: vendasData.map(item => item.data),
+        datasets: [{
+            label: 'Vendas (R$)',
+            data: vendasData.map(item => item.total),
+            borderColor: 'rgb(220, 20, 60)',
+            backgroundColor: 'rgba(220, 20, 60, 0.2)',
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

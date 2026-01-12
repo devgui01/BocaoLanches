@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestão de Estoque - Bocão Lanches{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-5 fw-bold">Gestão de Estoque</h1>
+    </div>
+</div>
+
+{% if ingredientes_estoque_baixo %}
+<div class="alert alert-warning">
+    <h5><i class="bi bi-exclamation-triangle"></i> Atenção: Estoque Baixo</h5>
+    <ul class="mb-0">
+        {% for ingrediente in ingredientes_estoque_baixo %}
+        <li>{{ ingrediente.nome }} - {{ ingrediente.quantidade_atual }} {{ ingrediente.unidade_medida }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Nova Movimentação</h5>
+                <form id="movimentacao-form">
+                    <div class="mb-3">
+                        <label class="form-label">Ingrediente *</label>
+                        <select class="form-select" id="ingrediente_id" required>
+                            <option value="">Selecione...</option>
+                            {% for ingrediente in ingredientes %}
+                            <option value="{{ ingrediente.id }}">{{ ingrediente.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tipo *</label>
+                        <select class="form-select" id="tipo" required>
+                            <option value="">Selecione...</option>
+                            <option value="entrada">Entrada</option>
+                            <option value="saida">Saída</option>
+                            <option value="ajuste">Ajuste</option>
+                            <option value="perda">Perda</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Quantidade *</label>
+                        <input type="number" class="form-control" id="quantidade" step="0.001" min="0.001" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Custo Unitário</label>
+                        <input type="number" class="form-control" id="custo_unitario" step="0.01" min="0">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Observações</label>
+                        <textarea class="form-control" id="observacoes" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Registrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Ingredientes</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Ingrediente</th>
+                            <th>Estoque Atual</th>
+                            <th>Mínimo</th>
+                            <th>Status</th>
+                            <th>Custo Unitário</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ingrediente in ingredientes %}
+                        <tr>
+                            <td>{{ ingrediente.nome }}</td>
+                            <td>{{ ingrediente.quantidade_atual }} {{ ingrediente.unidade_medida }}</td>
+                            <td>{{ ingrediente.quantidade_minima }} {{ ingrediente.unidade_medida }}</td>
+                            <td>
+                                {% if ingrediente.estoque_baixo %}
+                                <span class="badge bg-warning">Baixo</span>
+                                {% else %}
+                                <span class="badge bg-success">OK</span>
+                                {% endif %}
+                            </td>
+                            <td>R$ {{ ingrediente.custo_unitario|floatformat:2 }}</td>
+                            <td>
+                                <a href="{% url 'estoque:historico' ingrediente.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-clock-history"></i> Histórico
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Movimentações Recentes</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Ingrediente</th>
+                            <th>Tipo</th>
+                            <th>Quantidade</th>
+                            <th>Custo Total</th>
+                            <th>Usuário</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mov in movimentacoes_recentes %}
+                        <tr>
+                            <td>{{ mov.created_at|date:"d/m/Y H:i" }}</td>
+                            <td>{{ mov.ingrediente.nome }}</td>
+                            <td><span class="badge bg-{% if mov.tipo == 'entrada' %}success{% else %}danger{% endif %}">{{ mov.get_tipo_display }}</span></td>
+                            <td>{{ mov.quantidade }} {{ mov.ingrediente.unidade_medida }}</td>
+                            <td>R$ {{ mov.custo_total|floatformat:2 }}</td>
+                            <td>{{ mov.usuario.username|default:"-" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Nenhuma movimentação registrada</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('movimentacao-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        ingrediente_id: document.getElementById('ingrediente_id').value,
+        tipo: document.getElementById('tipo').value,
+        quantidade: parseFloat(document.getElementById('quantidade').value),
+        custo_unitario: parseFloat(document.getElementById('custo_unitario').value) || 0,
+        observacoes: document.getElementById('observacoes').value
+    };
+    
+    fetch('{% url "estoque:registrar_movimentacao" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Movimentação registrada com sucesso!');
+            location.reload();
+        } else {
+            alert('Erro: ' + data.message);
+        }
+    });
+});
+</script>
+{% endblock %}

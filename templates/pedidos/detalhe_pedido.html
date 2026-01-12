@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Pedido #{{ pedido.id }} - Bocão Lanches{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-5 fw-bold">Pedido #{{ pedido.id }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Itens do Pedido</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Preço Unit.</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in pedido.itens.all %}
+                        <tr>
+                            <td>{{ item.produto.nome }}</td>
+                            <td>{{ item.quantidade }}</td>
+                            <td>R$ {{ item.preco_unitario|floatformat:2 }}</td>
+                            <td>R$ {{ item.subtotal|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Informações do Cliente</h5>
+                <p><strong>Nome:</strong> {{ pedido.nome_cliente }}</p>
+                <p><strong>Telefone:</strong> {{ pedido.telefone|default:"-" }}</p>
+                <p><strong>Instagram:</strong> {{ pedido.instagram|default:"-" }}</p>
+                <p><strong>Endereço:</strong> {{ pedido.endereco_entrega|default:"-" }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Resumo Financeiro</h5>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span>R$ {{ pedido.subtotal|floatformat:2 }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Taxa de Entrega:</span>
+                    <span>R$ {{ pedido.taxa_entrega|floatformat:2 }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Desconto:</span>
+                    <span>R$ {{ pedido.desconto|floatformat:2 }}</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total:</strong>
+                    <strong class="text-primary">R$ {{ pedido.total|floatformat:2 }}</strong>
+                </div>
+                <hr>
+                <p><strong>Status:</strong> 
+                    <span class="badge bg-{% if pedido.status == 'pendente' %}warning{% elif pedido.status == 'preparando' %}info{% elif pedido.status == 'pronto' %}success{% elif pedido.status == 'entregue' %}success{% else %}danger{% endif %}">
+                        {{ pedido.get_status_display }}
+                    </span>
+                </p>
+                <p><strong>Pagamento:</strong> {{ pedido.get_forma_pagamento_display|default:"-" }}</p>
+                {% if pedido.observacoes %}
+                <p><strong>Observações:</strong> {{ pedido.observacoes }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
