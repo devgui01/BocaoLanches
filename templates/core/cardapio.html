@@ -1,5 +1,40 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cardápio | Bocão Lanches{% endblock %}
 
 {% block content %}
-<h1>Cardápio OK</h1>
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-warning">🍔 Cardápio Bocão Lanches</h1>
+        <p class="text-muted">Em breve nossos lanches estarão disponíveis aqui</p>
+    </div>
+
+    {% if categorias %}
+        {% for categoria in categorias %}
+            <div class="mb-4">
+                <h3 class="text-warning">{{ categoria.nome }}</h3>
+                <div class="row">
+                    {% for produto in categoria.produtos.all %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ produto.nome }}</h5>
+                                    <p class="card-text">{{ produto.descricao }}</p>
+                                    <strong>R$ {{ produto.preco }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">Nenhum produto nesta categoria.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-warning text-center">
+            ⚠️ Nenhuma categoria cadastrada ainda.
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
