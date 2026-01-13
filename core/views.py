@@ -1,20 +1,7 @@
-from django.shortcuts import render
-from .models import Produto, Categoria
-
+from django.http import HttpResponse
 
 def index(request):
-    """Página inicial"""
-    categorias = Categoria.objects.filter(ativa=True)
-    produtos_destaque = Produto.objects.filter(disponivel=True)[:6]
-    return render(request, 'core/index.html', {
-        'categorias': categorias,
-        'produtos_destaque': produtos_destaque,
-    })
-
+    return HttpResponse("SITE NO AR - FUNCIONANDO")
 
 def cardapio(request):
-    """Página do cardápio completo"""
-    categorias = Categoria.objects.filter(ativa=True).prefetch_related('produtos')
-    return render(request, 'core/cardapio.html', {
-        'categorias': categorias,
-    })
+    return HttpResponse("CARDAPIO OK")
