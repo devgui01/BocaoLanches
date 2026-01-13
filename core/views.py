@@ -1,7 +1,4 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 def index(request):
-    return HttpResponse("SITE NO AR - FUNCIONANDO")
-
-def cardapio(request):
-    return HttpResponse("CARDAPIO OK")
+    return render(request, "core/index.html")
