@@ -1,8 +1,15 @@
 from django.shortcuts import render
-from .models import Produto, Categoria
+
 
 def index(request):
-    return render(request, 'core/index.html')
+    context = {
+        'produtos_destaque': []
+    }
+    return render(request, 'core/index.html', context)
+
 
 def cardapio(request):
-    return render(request, 'core/cardapio.html')
+    context = {
+        'categorias': []
+    }
+    return render(request, 'core/cardapio.html', context)

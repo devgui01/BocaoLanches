@@ -1,15 +1,12 @@
-from django.shortcuts import render
-
-def index(request):
-    # Contexto seguro (nunca causa erro)
-    context = {
-        'produtos_destaque': []
-    }
-    return render(request, 'core/index.html', context)
-
-
-def cardapio(request):
-    context = {
-        'categorias': []
-    }
-    return render(request, 'core/cardapio.html', context)
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Bocão Lanches</title>
+</head>
+<body>
+    <h1>🍔 Bocão Lanches</h1>
+    <p>Site no ar e funcionando.</p>
+    <a href="/cardapio/">Ver Cardápio</a>
+</body>
+</html>

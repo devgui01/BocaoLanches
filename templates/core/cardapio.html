@@ -1,94 +1,12 @@
-{% extends 'base.html' %}
-
-{% block title %}Cardápio - Bocão Lanches{% endblock %}
-
-{% block content %}
-<div class="row mb-4">
-    <div class="col-12">
-        <h1 class="display-5 fw-bold">Cardápio</h1>
-        <p class="text-muted">Escolha seus produtos favoritos</p>
-    </div>
-</div>
-
-{% for categoria in categorias %}
-<div class="row mb-5">
-    <div class="col-12">
-        <h2 class="border-bottom pb-2 mb-4">{{ categoria.nome }}</h2>
-    </div>
-    {% for produto in categoria.produtos.all %}
-        {% if produto.disponivel %}
-        <div class="col-md-4 mb-4">
-            <div class="card product-card h-100">
-                {% if produto.imagem %}
-                <img src="{{ produto.imagem.url }}" class="card-img-top" alt="{{ produto.nome }}">
-                {% else %}
-                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
-                    <i class="bi bi-image text-white" style="font-size: 3rem;"></i>
-                </div>
-                {% endif %}
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{ produto.nome }}</h5>
-                    <p class="card-text flex-grow-1">{{ produto.descricao|truncatewords:20 }}</p>
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="h4 text-primary mb-0">R$ {{ produto.preco }}</span>
-                        {% if produto.disponivel_para_venda %}
-                        <button class="btn btn-primary" onclick="adicionarAoCarrinho({{ produto.id }})">
-                            <i class="bi bi-cart-plus"></i> Adicionar
-                        </button>
-                        {% else %}
-                        <span class="badge bg-danger">Indisponível</span>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    {% empty %}
-    <div class="col-12">
-        <p class="text-muted">Nenhum produto disponível nesta categoria.</p>
-    </div>
-    {% endfor %}
-</div>
-{% empty %}
-<div class="col-12 text-center">
-    <p class="text-muted">Nenhum produto disponível no momento.</p>
-</div>
-{% endfor %}
-{% endblock %}
-
-{% block extra_js %}
-<script>
-function adicionarAoCarrinho(produtoId) {
-    fetch('{% url "pedidos:adicionar_carrinho" %}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: JSON.stringify({
-            produto_id: produtoId,
-            quantidade: 1
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            atualizarCarrinho();
-            alert('Produto adicionado ao carrinho!');
-        } else {
-            alert('Erro: ' + data.message);
-        }
-    });
-}
-
-function atualizarCarrinho() {
-    fetch('{% url "pedidos:obter_carrinho" %}')
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('cart-count').textContent = data.quantidade_itens || 0;
-    });
-}
-
-document.addEventListener('DOMContentLoaded', atualizarCarrinho);
-</script>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cardápio</title>
+</head>
+<body>
+    <h1>📋 Cardápio</h1>
+    <p>Em construção</p>
+    <a href="/">Voltar</a>
+</body>
+</html>
