@@ -1,1 +1,40 @@
-<h1>Funcionou 🎉</h1>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Bocão Lanches</title>
+</head>
+<body>
+
+<h1>Bocão Lanches 🍔</h1>
+
+<h2>Categorias</h2>
+{% if categorias %}
+    <ul>
+    {% for c in categorias %}
+        <li>{{ c.nome }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Sem categorias cadastradas</p>
+{% endif %}
+
+<h2>Produtos em destaque</h2>
+{% if produtos_destaque %}
+    <ul>
+    {% for p in produtos_destaque %}
+        <li>
+            {{ p.nome }} - R$ {{ p.preco }}
+            {% if p.imagem %}
+                <br>
+                <img src="{{ p.imagem.url }}" width="120">
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Sem produtos cadastrados</p>
+{% endif %}
+
+</body>
+</html>
