@@ -1,12 +1,156 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cardápio</title>
-</head>
-<body>
-    <h1>📋 Cardápio</h1>
-    <p>Em construção</p>
-    <a href="/">Voltar</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Cardápio | Bocão Lanches{% endblock %}
+
+{% block content %}
+
+<style>
+/* ===== CARDÁPIO BOCÃO LANCHES ===== */
+
+.cardapio-hero {
+    background: linear-gradient(135deg, #111, #1c1c1c);
+    color: #fff;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.cardapio-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.cardapio-hero p {
+    font-size: 1.2rem;
+    color: #f1c40f;
+}
+
+.cardapio-container {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.categoria {
+    margin-bottom: 50px;
+}
+
+.categoria h2 {
+    font-size: 2rem;
+    color: #e74c3c;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e74c3c;
+    display: inline-block;
+}
+
+.itens {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.item {
+    background: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.item:hover {
+    transform: translateY(-8px);
+}
+
+.item h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.item p {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.item span {
+    display: block;
+    margin-top: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #27ae60;
+}
+
+.item.destaque {
+    border: 2px solid #e74c3c;
+    background: #fff5f5;
+}
+</style>
+
+<section class="cardapio-hero">
+    <h1>🍔 Nosso Cardápio</h1>
+    <p>Hambúrguer artesanal, feito pra quem tem fome de verdade.</p>
+</section>
+
+<section class="cardapio-container">
+
+    <div class="categoria">
+        <h2>🔥 Burgers Artesanais</h2>
+
+        <div class="itens">
+            <div class="item">
+                <h3>Bocão Smash</h3>
+                <p>Pão brioche, 2 carnes smash, cheddar, cebola caramelizada</p>
+                <span>R$ 24,90</span>
+            </div>
+
+            <div class="item">
+                <h3>Bocão Bacon</h3>
+                <p>Pão brioche, carne artesanal, muito bacon, queijo prato</p>
+                <span>R$ 27,90</span>
+            </div>
+
+            <div class="item destaque">
+                <h3>💣 Bocão Monster</h3>
+                <p>3 carnes, cheddar duplo, bacon, molho especial da casa</p>
+                <span>R$ 34,90</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="categoria">
+        <h2>🍟 Acompanhamentos</h2>
+
+        <div class="itens">
+            <div class="item">
+                <h3>Batata Frita</h3>
+                <p>Porção crocante</p>
+                <span>R$ 9,90</span>
+            </div>
+
+            <div class="item">
+                <h3>Batata Cheddar & Bacon</h3>
+                <p>Explosão de sabor</p>
+                <span>R$ 16,90</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="categoria">
+        <h2>🥤 Bebidas</h2>
+
+        <div class="itens">
+            <div class="item">
+                <h3>Refrigerante Lata</h3>
+                <p>Coca, Guaraná, Fanta</p>
+                <span>R$ 6,00</span>
+            </div>
+
+            <div class="item">
+                <h3>Suco Natural</h3>
+                <p>Laranja ou Limão</p>
+                <span>R$ 8,00</span>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}
