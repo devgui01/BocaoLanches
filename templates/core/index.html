@@ -1,88 +1,15 @@
-{% extends 'base.html' %}
-{% load static %}
+from django.shortcuts import render
 
-{% block title %}Bocão Lanches - Início{% endblock %}
+def index(request):
+    # Contexto seguro (nunca causa erro)
+    context = {
+        'produtos_destaque': []
+    }
+    return render(request, 'core/index.html', context)
 
-{% block content %}
-<div class="row mb-5">
-    <div class="col-12 text-center">
-        <div class="logo-container mb-4">
-            <img src="{% static 'images/logo.png' %}" alt="Bocão Lanches" class="logo-principal" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <h1 class="display-4 fw-bold" style="color: var(--dourado); display: none;">BOCÃO LANCHES</h1>
-        </div>
-        <p class="lead">Os melhores hambúrgueres da cidade!</p>
-        <a href="{% url 'core:cardapio' %}" class="btn btn-primary btn-lg mt-3">
-            <i class="bi bi-menu-button-wide"></i> Ver Cardápio
-        </a>
-    </div>
-</div>
 
-{% if produtos_destaque %}
-<div class="row">
-    <div class="col-12">
-        <h2 class="mb-4">Destaques</h2>
-    </div>
-    {% for produto in produtos_destaque %}
-    <div class="col-md-4 mb-4">
-        <div class="card product-card" onclick="adicionarAoCarrinho({{ produto.id }})">
-            {% if produto.imagem %}
-            <img src="{{ produto.imagem.url }}" class="card-img-top" alt="{{ produto.nome }}">
-            {% else %}
-            <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px; background: linear-gradient(135deg, var(--preto-suave) 0%, #252525 100%);">
-                <i class="bi bi-image" style="font-size: 3rem; color: var(--dourado);"></i>
-            </div>
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ produto.nome }}</h5>
-                <p class="card-text">{{ produto.descricao|truncatewords:15 }}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="h4 text-primary mb-0">R$ {{ produto.preco }}</span>
-                    <button class="btn btn-primary">
-                        <i class="bi bi-cart-plus"></i> Adicionar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
-{% endblock %}
-
-{% block extra_js %}
-<script>
-function adicionarAoCarrinho(produtoId) {
-    fetch('{% url "pedidos:adicionar_carrinho" %}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: JSON.stringify({
-            produto_id: produtoId,
-            quantidade: 1
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            atualizarCarrinho();
-            alert('Produto adicionado ao carrinho!');
-        } else {
-            alert('Erro: ' + data.message);
-        }
-    });
-}
-
-function atualizarCarrinho() {
-    fetch('{% url "pedidos:obter_carrinho" %}')
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('cart-count').textContent = data.quantidade_itens || 0;
-    });
-}
-
-// Atualizar contador ao carregar página
-document.addEventListener('DOMContentLoaded', atualizarCarrinho);
-</script>
-{% endblock %}
+def cardapio(request):
+    context = {
+        'categorias': []
+    }
+    return render(request, 'core/cardapio.html', context)
