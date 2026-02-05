@@ -1,0 +1,34 @@
+========================================
+  COMANDOS PARA CRIAR REPOSITORIO GIT
+========================================
+
+✅ Git já foi inicializado localmente!
+✅ Arquivos já foram commitados!
+
+AGORA VOCÊ PRECISA:
+
+1. CRIAR REPOSITÓRIO NO GITHUB:
+   - Acesse: https://github.com/new
+   - Nome: BocaoLanches
+   - Descrição: Sistema de vendas e gestão para hamburgueria
+   - Público ou Privado (escolha)
+   - NÃO marque "Initialize with README"
+   - Clique em "Create repository"
+
+2. CONECTAR AO REPOSITÓRIO REMOTO:
+   Execute no terminal (substitua SEU_USUARIO):
+   
+   git remote add origin https://github.com/SEU_USUARIO/BocaoLanches.git
+   git branch -M main
+   git push -u origin main
+
+3. AUTENTICAR:
+   - Use seu usuário do GitHub
+   - Senha: Use um Personal Access Token
+     (Crie em: https://github.com/settings/tokens)
+
+4. VOLTAR AO RENDER:
+   - Selecione o repositório "BocaoLanches"
+   - Continue a configuração
+
+========================================
