@@ -52,6 +52,11 @@ section h2 { color: #1e90ff; font-size: 1.6em; margin-bottom: 15px; border-botto
 .skill-bar { background:#333; border-radius:6px; overflow:hidden; height:14px; }
 .skill-fill { height:100%; background:#1e90ff; width:0%; }
 
+/* Cursos */
+.course { margin-bottom: 10px; }
+.course a { color:#1e90ff; font-weight:500; }
+.course a:hover { color:#63b3ed; }
+
 /* Animação */
 @keyframes profileFade { from {opacity:0; transform:scale(0.5);} to {opacity:1; transform:scale(1);} }
 
@@ -73,13 +78,14 @@ section h2 { color: #1e90ff; font-size: 1.6em; margin-bottom: 15px; border-botto
     <div class="links">
         <a href="mailto:guilhermekauamt01@gmail.com">E-mail</a>
         <a href="https://github.com/devgui01" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/seu-linkedin" target="_blank">LinkedIn</a>
     </div>
 </header>
 
 <main>
     <section id="resumo">
         <h2>Resumo Profissional</h2>
-        <p>Desenvolvedor Full Stack com experiência em desenvolvimento de sistemas industriais, automação de processos e manutenção de soluções internas. Experiência com Delphi, SQL Server, Flutter/Dart e migração de sistemas para Python utilizando Django. Focado em desenvolvimento escalável, organizado e orientado a resultados.</p>
+        <p>Desenvolvedor Full Stack com experiência em desenvolvimento de sistemas industriais, automação de processos e manutenção de soluções internas. Experiência com Delphi, SQL Server, Flutter/Dart e migração de sistemas para Python/Django. Focado em desenvolvimento escalável, organizado e orientado a resultados.</p>
     </section>
 
     <section id="experiencia">
@@ -88,7 +94,8 @@ section h2 { color: #1e90ff; font-size: 1.6em; margin-bottom: 15px; border-botto
             <li>
                 <span class="job-title">Desenvolvedor Full Stack</span> - <span class="company">Açofer Indústria, Cuiabá, MT</span><br>
                 <span class="date">Maio 2024 – Fevereiro 2026</span><br>
-                Desenvolvimento em Delphi e SQL Server, utilização de SVN para versionamento, migração de sistemas para Python/Django e participação em projetos com Flutter/Dart.
+                Desenvolvimento em Delphi e SQL Server, utilização de SVN para versionamento, migração de sistemas para Python/Django e participação em projetos com Flutter/Dart.  
+                <br>Projetos: <a href="https://github.com/devgui01/BocaoLanches" target="_blank">BocaoLanches</a>, <a href="https://github.com/devgui01/outro-projeto" target="_blank">Outro Projeto</a>
             </li>
             <li>
                 <span class="job-title">Auxiliar de TI</span> - <span class="company">Açofer Indústria, Cuiabá, MT</span><br>
@@ -114,13 +121,25 @@ section h2 { color: #1e90ff; font-size: 1.6em; margin-bottom: 15px; border-botto
         <div class="skill"><div class="skill-name">Git / GitHub</div><div class="skill-bar"><div class="skill-fill" style="--width:95%;"></div></div></div>
     </section>
 
+    <section id="cursos">
+        <h2>Cursos e Certificações</h2>
+        <ul>
+            <li class="course"><a href="https://www.udemy.com/course/sqlserver" target="_blank">Curso de SQL Server – Udemy</a></li>
+            <li class="course"><a href="https://www.udemy.com/course/delphi" target="_blank">Curso de Delphi – Udemy</a></li>
+            <li class="course"><a href="https://pycodebr.com/django-master" target="_blank">Django Master – PyCodeBR</a></li>
+        </ul>
+    </section>
+
     <section id="projetos">
         <h2>Projetos Relevantes</h2>
         <ul>
             <li>Migração de sistema Delphi para Django</li>
             <li>Desenvolvimento de sistemas internos para controle industrial</li>
             <li>Aplicativos em Flutter/Dart para testes e protótipos</li>
-            <li>Repositório GitHub com projetos pessoais de programação</li>
+            <li>Repositório GitHub com projetos pessoais de programação: 
+                <a href="https://github.com/devgui01/BocaoLanches" target="_blank">BocaoLanches</a>,
+                <a href="https://github.com/devgui01/outro-projeto" target="_blank">Outro Projeto</a>
+            </li>
         </ul>
     </section>
 </main>
