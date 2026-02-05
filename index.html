@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guilherme Kauan - Desenvolvedor</title>
+<title>Guilherme Kauan Marques Da Silva - Desenvolvedor Full Stack</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-/* Reset básico */
+/* Reset e base */
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
     font-family: 'Inter', sans-serif;
@@ -21,7 +21,7 @@ a:hover { color: #63b3ed; }
 main { max-width: 900px; margin: 60px auto; background: #1f1f1f; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
 
 /* Header */
-header { text-align: center; margin-bottom: 50px; position: relative; }
+header { text-align: center; margin-bottom: 50px; }
 header img {
     width: 140px;
     height: 140px;
@@ -31,11 +31,10 @@ header img {
     margin-bottom: 20px;
     animation: profileFade 1s ease-out forwards;
 }
-header h1 { font-size: 2.5em; color: #1e90ff; margin-bottom: 10px; animation: fadeIn 1s forwards; }
-header h2 { font-size: 1.2em; color: #63b3ed; margin-bottom: 5px; animation: fadeIn 1s 0.2s forwards; }
-header p { color: #bbb; font-size: 1em; animation: fadeIn 1s 0.4s forwards; }
-@keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
-@keyframes profileFade { from {opacity:0; transform:scale(0.5);} to {opacity:1; transform:scale(1);} }
+header h1 { font-size: 2.5em; color: #1e90ff; margin-bottom: 5px; }
+header h2 { font-size: 1.3em; color: #63b3ed; margin-bottom: 10px; }
+header p { color: #bbb; font-size: 1em; margin-bottom: 10px; }
+.links a { margin: 0 10px; font-weight:600; }
 
 /* Seções */
 section { margin-bottom: 35px; opacity:0; transform:translateY(20px); transition: all 0.8s ease-out; }
@@ -47,15 +46,14 @@ section h2 { color: #1e90ff; font-size: 1.6em; margin-bottom: 15px; border-botto
 .company, .school { font-style: italic; color: #aaa; }
 .date { font-size: 0.9em; color: #888; }
 
-/* Skills com barra animada */
+/* Skills */
 .skill { margin-bottom: 15px; }
 .skill-name { margin-bottom: 5px; color:#bbb; }
 .skill-bar { background:#333; border-radius:6px; overflow:hidden; height:14px; }
 .skill-fill { height:100%; background:#1e90ff; width:0%; }
 
-/* Links de rede */
-.links { margin-top:10px; }
-.links a { margin: 0 10px; font-weight:600; }
+/* Animação */
+@keyframes profileFade { from {opacity:0; transform:scale(0.5);} to {opacity:1; transform:scale(1);} }
 
 /* Responsivo */
 @media(max-width:600px){
@@ -68,10 +66,10 @@ section h2 { color: #1e90ff; font-size: 1.6em; margin-bottom: 15px; border-botto
 <body>
 
 <header>
-    <img src="https://raw.githubusercontent.com/devgui01/BocaoLanches/main/WhatsApp%20Image%202026-02-05%20at%2015.42.49.jpeg" alt="Foto Guilherme Kauan">
-    <h1>Guilherme Kauan</h1>
-    <h2>Desenvolvedor de Sistemas & Automação</h2>
-    <p>Cuiabá, MT</p>
+    <img src="https://raw.githubusercontent.com/devgui01/BocaoLanches/main/WhatsApp%20Image%202026-02-05%20at%2015.42.49.jpeg" alt="Guilherme Kauan Marques Da Silva">
+    <h1>Guilherme Kauan Marques Da Silva</h1>
+    <h2>Desenvolvedor Full Stack</h2>
+    <p>19 anos | Cuiabá, MT | UNIC – Ciência da Computação (em andamento)</p>
     <div class="links">
         <a href="mailto:guilhermekauamt01@gmail.com">E-mail</a>
         <a href="https://github.com/devgui01" target="_blank">GitHub</a>
@@ -81,16 +79,16 @@ section h2 { color: #1e90ff; font-size: 1.6em; margin-bottom: 15px; border-botto
 <main>
     <section id="resumo">
         <h2>Resumo Profissional</h2>
-        <p>Programador com experiência em desenvolvimento de sistemas para indústria, automação de processos e suporte a TI. Focado em soluções escaláveis e eficientes. Atualmente cursando Ciência da Computação.</p>
+        <p>Desenvolvedor Full Stack com experiência em desenvolvimento de sistemas industriais, automação de processos e manutenção de soluções internas. Experiência com Delphi, SQL Server, Flutter/Dart e migração de sistemas para Python utilizando Django. Focado em desenvolvimento escalável, organizado e orientado a resultados.</p>
     </section>
 
     <section id="experiencia">
         <h2>Experiência Profissional</h2>
         <ul>
             <li>
-                <span class="job-title">Programador</span> - <span class="company">Açofer Indústria, Cuiabá, MT</span><br>
+                <span class="job-title">Desenvolvedor Full Stack</span> - <span class="company">Açofer Indústria, Cuiabá, MT</span><br>
                 <span class="date">Maio 2024 – Fevereiro 2026</span><br>
-                Desenvolvimento e manutenção de sistemas internos, automação de processos e suporte à equipe de TI.
+                Desenvolvimento em Delphi e SQL Server, utilização de SVN para versionamento, migração de sistemas para Python/Django e participação em projetos com Flutter/Dart.
             </li>
             <li>
                 <span class="job-title">Auxiliar de TI</span> - <span class="company">Açofer Indústria, Cuiabá, MT</span><br>
@@ -103,30 +101,32 @@ section h2 { color: #1e90ff; font-size: 1.6em; margin-bottom: 15px; border-botto
     <section id="formacao">
         <h2>Formação Acadêmica</h2>
         <ul>
-            <li><span class="school">Ciência da Computação</span> - <span class="date">Em andamento</span></li>
+            <li><span class="school">Ciência da Computação – UNIC</span> (em andamento)</li>
         </ul>
     </section>
 
     <section id="skills">
         <h2>Habilidades Técnicas</h2>
-        <div class="skill"><div class="skill-name">Delphi / SQL Server</div><div class="skill-bar"><div class="skill-fill" style="--width:90%;"></div></div></div>
+        <div class="skill"><div class="skill-name">Delphi / SQL Server / SVN</div><div class="skill-bar"><div class="skill-fill" style="--width:90%;"></div></div></div>
+        <div class="skill"><div class="skill-name">Python / Django</div><div class="skill-bar"><div class="skill-fill" style="--width:80%;"></div></div></div>
+        <div class="skill"><div class="skill-name">Flutter / Dart</div><div class="skill-bar"><div class="skill-fill" style="--width:75%;"></div></div></div>
         <div class="skill"><div class="skill-name">HTML / CSS / JavaScript</div><div class="skill-bar"><div class="skill-fill" style="--width:85%;"></div></div></div>
-        <div class="skill"><div class="skill-name">Automação de Processos / Scripts</div><div class="skill-bar"><div class="skill-fill" style="--width:80%;"></div></div></div>
         <div class="skill"><div class="skill-name">Git / GitHub</div><div class="skill-bar"><div class="skill-fill" style="--width:95%;"></div></div></div>
     </section>
 
     <section id="projetos">
         <h2>Projetos Relevantes</h2>
         <ul>
-            <li>Sistemas internos para controle de produção na indústria</li>
-            <li>Automação de relatórios e processos administrativos</li>
+            <li>Migração de sistema Delphi para Django</li>
+            <li>Desenvolvimento de sistemas internos para controle industrial</li>
+            <li>Aplicativos em Flutter/Dart para testes e protótipos</li>
             <li>Repositório GitHub com projetos pessoais de programação</li>
         </ul>
     </section>
 </main>
 
 <script>
-// Aparecer as seções ao rolar
+// Scroll animation das seções
 const sections = document.querySelectorAll('section');
 window.addEventListener('scroll', () => {
     const triggerBottom = window.innerHeight / 5 * 4;
@@ -138,7 +138,7 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Animar barras de skills
+// Animação das barras de skills
 window.addEventListener('load', () => {
     const fills = document.querySelectorAll('.skill-fill');
     fills.forEach(f => {
