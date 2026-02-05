@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout - Bocão Lanches{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="mb-4">Finalizar Pedido</h3>
+                <form id="checkout-form">
+                    <div class="mb-3">
+                        <label class="form-label">Nome Completo *</label>
+                        <input type="text" class="form-control" id="nome_cliente" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Telefone *</label>
+                            <input type="tel" class="form-control" id="telefone" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Instagram</label>
+                            <input type="text" class="form-control" id="instagram" placeholder="@seuinstagram">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Endereço de Entrega</label>
+                        <textarea class="form-control" id="endereco_entrega" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Forma de Pagamento *</label>
+                        <select class="form-select" id="forma_pagamento" required>
+                            <option value="">Selecione...</option>
+                            <option value="pix">PIX</option>
+                            <option value="dinheiro">Dinheiro</option>
+                            <option value="cartao_credito">Cartão de Crédito</option>
+                            <option value="cartao_debito">Cartão de Débito</option>
+                            <option value="mercado_pago">Mercado Pago</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Observações</label>
+                        <textarea class="form-control" id="observacoes" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="bi bi-check-circle"></i> Confirmar Pedido
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Resumo</h5>
+                <hr>
+                <div id="resumo-itens"></div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total:</strong>
+                    <strong class="text-primary" id="total-resumo">R$ {{ subtotal|floatformat:2 }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function carregarResumo() {
+    fetch('{% url "pedidos:obter_carrinho" %}')
+    .then(response => response.json())
+    .then(data => {
+        const carrinho = data.carrinho || {};
+        let html = '';
+        let total = 0;
+        
+        for (const [id, item] of Object.entries(carrinho)) {
+            const itemSubtotal = item.preco * item.quantidade;
+            total += itemSubtotal;
+            html += `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>${item.nome} x${item.quantidade}</span>
+                    <span>R$ ${itemSubtotal.toFixed(2)}</span>
+                </div>
+            `;
+        }
+        
+        document.getElementById('resumo-itens').innerHTML = html;
+        document.getElementById('total-resumo').textContent = `R$ ${total.toFixed(2)}`;
+    });
+}
+
+document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        nome_cliente: document.getElementById('nome_cliente').value,
+        telefone: document.getElementById('telefone').value,
+        instagram: document.getElementById('instagram').value,
+        endereco_entrega: document.getElementById('endereco_entrega').value,
+        forma_pagamento: document.getElementById('forma_pagamento').value,
+        observacoes: document.getElementById('observacoes').value,
+        taxa_entrega: 0,
+        desconto: 0
+    };
+    
+    fetch('{% url "pedidos:criar_pedido" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Pedido realizado com sucesso! Número do pedido: #' + data.pedido_id);
+            window.location.href = '{% url "core:index" %}';
+        } else {
+            alert('Erro ao realizar pedido: ' + data.message);
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', carregarResumo);
+</script>
+{% endblock %}
