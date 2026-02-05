@@ -3,102 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Currículo Guilherme Kauan</title>
+<title>Currículo - Guilherme Kauan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f5f5f5;
-        margin: 0;
-        padding: 0;
-        color: #333;
-    }
-    header {
-        background: #1e40af;
-        color: white;
-        padding: 30px 20px;
-        text-align: center;
-    }
-    header h1 {
-        margin: 0;
-        font-size: 2em;
-    }
-    header p {
-        margin: 5px 0 0 0;
-        font-size: 1em;
-    }
-    main {
-        max-width: 900px;
-        margin: 20px auto;
-        background: white;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-    }
-    section {
-        margin-bottom: 25px;
-    }
-    h2 {
-        color: #1e40af;
-        border-bottom: 2px solid #1e40af;
-        padding-bottom: 5px;
-        margin-bottom: 10px;
-    }
-    ul {
-        list-style: none;
-        padding-left: 0;
-    }
-    li {
-        margin-bottom: 8px;
-    }
-    .job-title {
-        font-weight: bold;
-    }
-    .company, .school {
-        font-style: italic;
-    }
-    .date {
-        color: #555;
-        font-size: 0.9em;
-    }
-    a {
-        color: #1e40af;
-        text-decoration: none;
-    }
-    a:hover {
-        text-decoration: underline;
+    /* Reset básico */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f5f7fa; color: #333; line-height: 1.6; }
+
+    /* Animação fade-in para seções */
+    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeIn 0.8s forwards; }
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* Container principal */
+    main { max-width: 900px; margin: 40px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+
+    /* Header */
+    header { text-align: center; margin-bottom: 40px; }
+    header h1 { font-size: 2.5em; color: #1e40af; margin-bottom: 10px; }
+    header p { color: #555; font-size: 1em; }
+    header a { color: #1e40af; text-decoration: none; margin: 0 10px; transition: color 0.3s; }
+    header a:hover { color: #2563eb; }
+
+    /* Seções */
+    section { margin-bottom: 30px; }
+    section h2 { color: #1e40af; font-size: 1.5em; margin-bottom: 15px; border-bottom: 2px solid #1e40af; padding-bottom: 5px; display: inline-block; }
+    ul { list-style: none; padding-left: 0; }
+    li { margin-bottom: 12px; }
+
+    /* Experiência e formação */
+    .job-title { font-weight: 600; }
+    .company, .school { font-style: italic; color: #555; }
+    .date { font-size: 0.9em; color: #888; }
+
+    /* Skills com barra animada */
+    .skill { margin-bottom: 10px; }
+    .skill-name { margin-bottom: 4px; }
+    .skill-bar { background: #e2e8f0; border-radius: 6px; overflow: hidden; height: 12px; }
+    .skill-fill { height: 100%; background: #1e40af; width: 0%; animation: fillBar 1s forwards; }
+    @keyframes fillBar { from { width: 0%; } to { width: var(--width); } }
+
+    /* Responsivo */
+    @media(max-width: 600px) {
+        main { margin: 20px; padding: 25px; }
+        header h1 { font-size: 2em; }
     }
 </style>
 </head>
 <body>
 
-<header>
+<header class="fade-in">
     <h1>Guilherme Kauan</h1>
-    <p>Programador | Cuiabá, MT | <a href="mailto:guilhermekauamt01@gmail.com">guilhermekauamt01@gmail.com</a> | <a href="https://github.com/devgui01" target="_blank">GitHub</a></p>
+    <p>
+        <a href="mailto:guilhermekauamt01@gmail.com">guilhermekauamt01@gmail.com</a> |
+        <a href="https://github.com/devgui01" target="_blank">GitHub</a> |
+        Cuiabá, MT
+    </p>
 </header>
 
 <main>
-    <section>
+    <section class="fade-in" style="animation-delay: 0.2s;">
         <h2>Resumo Profissional</h2>
-        <p>Programador com experiência em desenvolvimento de sistemas para indústria e automação de processos, focado em soluções práticas e escaláveis. Atualmente cursando Ciência da Computação.</p>
+        <p>Programador com experiência em desenvolvimento de sistemas para indústria, automação de processos e suporte a TI. Focado em soluções práticas e escaláveis. Atualmente cursando Ciência da Computação.</p>
     </section>
 
-    <section>
+    <section class="fade-in" style="animation-delay: 0.4s;">
         <h2>Experiência Profissional</h2>
         <ul>
             <li>
                 <span class="job-title">Programador</span> - <span class="company">Açofer Indústria, Cuiabá, MT</span><br>
                 <span class="date">Maio 2024 – Fevereiro 2026</span><br>
-                Desenvolvimento e manutenção de sistemas internos, automação de processos e suporte a equipe de TI.
+                Desenvolvimento e manutenção de sistemas internos, automação de processos e suporte à equipe de TI.
             </li>
             <li>
                 <span class="job-title">Auxiliar de TI</span> - <span class="company">Açofer Indústria, Cuiabá, MT</span><br>
                 <span class="date">Antes de 2024</span><br>
-                Suporte técnico básico e manutenção de computadores e redes internas.
+                Suporte técnico básico, manutenção de computadores e redes internas.
             </li>
         </ul>
     </section>
 
-    <section>
+    <section class="fade-in" style="animation-delay: 0.6s;">
         <h2>Formação Acadêmica</h2>
         <ul>
             <li>
@@ -107,17 +91,27 @@
         </ul>
     </section>
 
-    <section>
+    <section class="fade-in" style="animation-delay: 0.8s;">
         <h2>Habilidades Técnicas</h2>
-        <ul>
-            <li>Delphi, SQL Server</li>
-            <li>HTML, CSS, JavaScript</li>
-            <li>Automação de processos e scripts</li>
-            <li>Controle de versões (Git/GitHub)</li>
-        </ul>
+        <div class="skill">
+            <div class="skill-name">Delphi / SQL Server</div>
+            <div class="skill-bar"><div class="skill-fill" style="--width: 90%;"></div></div>
+        </div>
+        <div class="skill">
+            <div class="skill-name">HTML / CSS / JavaScript</div>
+            <div class="skill-bar"><div class="skill-fill" style="--width: 85%;"></div></div>
+        </div>
+        <div class="skill">
+            <div class="skill-name">Automação de Processos / Scripts</div>
+            <div class="skill-bar"><div class="skill-fill" style="--width: 80%;"></div></div>
+        </div>
+        <div class="skill">
+            <div class="skill-name">Git / GitHub</div>
+            <div class="skill-bar"><div class="skill-fill" style="--width: 95%;"></div></div>
+        </div>
     </section>
 
-    <section>
+    <section class="fade-in" style="animation-delay: 1s;">
         <h2>Projetos Relevantes</h2>
         <ul>
             <li>Sistemas internos para controle de produção na indústria</li>
@@ -126,6 +120,17 @@
         </ul>
     </section>
 </main>
+
+<script>
+    // Aplicar animação das skills após carregamento
+    window.addEventListener('load', () => {
+        const fills = document.querySelectorAll('.skill-fill');
+        fills.forEach(f => {
+            const width = f.style.getPropertyValue('--width');
+            f.style.width = width;
+        });
+    });
+</script>
 
 </body>
 </html>
