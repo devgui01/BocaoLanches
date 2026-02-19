@@ -23,6 +23,8 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
+<link rel="icon" type="image/png" href="favicon.png">
+
 <style>
 :root{
   --bg:#070712;
@@ -143,6 +145,7 @@ nav{
   gap:16px;
   margin-top:25px;
 }
+
 .btn{
   padding:13px 22px;
   border-radius:16px;
@@ -150,7 +153,10 @@ nav{
   cursor:pointer;
   font-weight:700;
   transition:.35s;
+  text-decoration:none;
+  display:inline-block;
 }
+
 .btn.primary{
   background:var(--primary);
   color:white;
@@ -159,6 +165,7 @@ nav{
 .btn.primary:hover{
   transform:translateY(-4px);
 }
+
 .btn.outline{
   background:transparent;
   border:2px solid var(--accent);
@@ -266,12 +273,22 @@ nav{
 <div class="blur one"></div>
 <div class="blur two"></div>
 
+<!-- NAVBAR -->
 <nav>
   <div class="logo">Guilherme<span>.</span></div>
+
   <div class="social">
     <a href="https://github.com/devgui01" target="_blank">GitHub</a>
-    <a href="#">LinkedIn</a>
-    <a href="mailto:guilhermekauamt01@gmail.com">Email</a>
+
+    <!-- LINKEDIN CORRIGIDO -->
+    <a href="https://www.linkedin.com/in/guilherme-kauan-104546245/" target="_blank">
+      LinkedIn
+    </a>
+
+    <!-- EMAIL CORRIGIDO -->
+    <a href="mailto:guilhermekauamt01@gmail.com">
+      Email
+    </a>
   </div>
 </nav>
 
@@ -280,6 +297,7 @@ nav{
   <!-- LEFT -->
   <div class="hero">
     <h1>Full Stack<br><span>Developer</span></h1>
+
     <p>
       Desenvolvedor com experiência real em sistemas industriais,
       automação e modernização de aplicações usando Delphi, SQL Server,
@@ -294,7 +312,13 @@ nav{
 
     <div class="actions">
       <button class="btn primary">Baixar CV</button>
-      <button class="btn outline">Ver Projetos</button>
+
+      <!-- VER PROJETOS CORRIGIDO -->
+      <a href="https://github.com/devgui01?tab=repositories"
+         target="_blank"
+         class="btn outline">
+        Ver Projetos
+      </a>
     </div>
 
     <div class="profile">
